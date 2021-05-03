@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Card, CardText, CardBody, CardTitle } from 'reactstrap';
+import { Card, CardText, CardBody } from 'reactstrap';
 import axios from 'axios';
 
 function AllStudents() {
@@ -20,45 +20,63 @@ function AllStudents() {
     }, []);
 
     return (
-        <div>
+        <Card className="mt-5 mb-5 main-card  container">
             {state.students.map(student => { 
                 return (
-                    <Card key={student.id} className="m-2">
-                        <img src={student.pic} alt={`${student.firstName} ${student.lastName}`}
-                            className="rounded float-left img-fluid student-avatar m-2 ml-3" />
-                        <CardBody className="text-left">
-                            <CardTitle tag="h4" className="font-weight-bold">
-                                {`${student.firstName} ${student.lastName}`}
-                            </CardTitle>
-                            <CardText> Email: {student.email} </CardText>
-                            <CardText> Company: {student.company} </CardText>
-                            <CardText> Skill: {student.skill} </CardText>
-                            <CardText>
-                                Average: 
-                                <span className="ml-1">
-                                {(student.grades.length > 0)? 
-                                    <React.Fragment>
-                                        {student.grades.map(grade => { 
-                                            averageOfGrades = 
-                                                student.grades.reduce(
-                                                    (sum, grade) => 
-                                                        sum + Number(grade), 0) / student.grades.length; 
-                                                return true;
-                                            })
-                                        }
-                                        {`${averageOfGrades}${"%"}`}
-                                    </React.Fragment>
-                                    :
-                                    <React.Fragment></React.Fragment>
-                                }  
-                                </span>
-                            </CardText>
-                        </CardBody>
-                    </Card> 
+                    <div key={student.id}>
+                        <div className="row">
+                            <div className="col-md-2">
+                                <img 
+                                    src={student.pic} 
+                                    alt={`${student.firstName} ${student.lastName}`}
+                                    className="float-left img-fluid student-avatar m-2 ml-3 mt-3 rounded-circle"
+                                />
+                            </div>
+                            <div className="col-md-8 m-1">
+                                <h3 className="mt-1 text-left font-weight-bold text-uppercase">
+                                    {`${student.firstName} ${student.lastName}`}
+                                </h3>
+                                <CardBody className="text-left main-font">
+                                    <CardText>
+                                        <span className="student-data">
+                                            Email: {student.email}
+                                        </span>
+                                        <span className="student-data">
+                                            Company: {student.company}
+                                        </span> 
+                                        <span className="student-data">
+                                            Skill: {student.skill}
+                                        </span>
+                                        <span className="student-data">
+                                            Average: 
+                                            <span className="ml-1">
+                                            {(student.grades.length > 0)?
+                                                <React.Fragment>
+                                                    {student.grades.map(grade => {
+                                                        averageOfGrades =
+                                                            student.grades.reduce(
+                                                                (sum, grade) =>
+                                                                    sum + Number(grade), 0) / student.grades.length; 
+                                                            return true;
+                                                        })
+                                                    }
+                                                    {`${averageOfGrades}${"%"}`}
+                                                </React.Fragment>
+                                                :
+                                                <React.Fragment></React.Fragment>
+                                            }
+                                            </span>
+                                        </span>
+                                    </CardText>
+                                </CardBody>
+                            </div>
+                        </div> 
+                        <hr />
+                    </div> 
                 );
             })
-            }   
-        </div>
+            }  
+        </Card>
     )
 }
 
