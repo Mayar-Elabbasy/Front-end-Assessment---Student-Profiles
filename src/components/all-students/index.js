@@ -6,6 +6,7 @@ function AllStudents() {
     let averageOfGrades = 0;
     const [state, setState] = useState({
         students: [],
+        searchByStudentName: ''
     });
 
     useEffect(() => {
@@ -13,6 +14,7 @@ function AllStudents() {
         axios.get('https://api.hatchways.io/assessment/students').then(response => {
 			// console.log(response.data);
             setState({
+                searchByStudentName: '',
                 students: response.data.students,  
             })		
 		}).catch(error => {
@@ -20,9 +22,27 @@ function AllStudents() {
 		});
     }, []);
 
+    const handleSearchByStudentName = ({target}) => {
+        setState({ 
+            ...state,
+            searchByStudentName: target.value.substr(0,100) 
+        });
+    }
+
+    let students = state.students.filter((student) => {
+        let studentFullName = `${student.firstName} ${student.lastName}`;
+        // console.log(studentFullName);
+        return student.firstName.toLowerCase().indexOf(state.searchByStudentName.toLowerCase()) >= 0
+        || student.lastName.toLowerCase().indexOf(state.searchByStudentName.toLowerCase()) >= 0
+        || studentFullName.toLowerCase().indexOf(state.searchByStudentName.toLowerCase()) >= 0;
+    });
+
     return (
         <Card className="mt-5 mb-5 main-card container" tabIndex="0">
-            {state.students.map(student => { 
+            <input type="search" placeholder="Search by name" 
+                   onChange={handleSearchByStudentName} />
+
+            {students.map(student => { 
                 return (
                     <div key={student.id}>
                         <div className="row">
@@ -33,7 +53,7 @@ function AllStudents() {
                                     className="float-left img-fluid student-avatar m-2 ml-3 mt-3 rounded-circle"
                                 />
                             </div>
-                            <div className="col-md-8 m-1">
+                            <div className="col-md-9 m-1">
                                 <h3 className="mt-1 text-left font-weight-bold text-uppercase">
                                     {`${student.firstName} ${student.lastName}`}
                                 </h3>
