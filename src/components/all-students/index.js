@@ -9,6 +9,7 @@ function AllStudents() {
     });
 
     useEffect(() => {
+        document.querySelector(".main-card").focus();
         axios.get('https://api.hatchways.io/assessment/students').then(response => {
 			// console.log(response.data);
             setState({
@@ -20,7 +21,7 @@ function AllStudents() {
     }, []);
 
     return (
-        <Card className="mt-5 mb-5 main-card  container">
+        <Card className="mt-5 mb-5 main-card container" tabIndex="0">
             {state.students.map(student => { 
                 return (
                     <div key={student.id}>

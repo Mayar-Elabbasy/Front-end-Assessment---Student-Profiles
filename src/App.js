@@ -3,9 +3,11 @@ import AllStudents from './components/all-students';
 
 function App() {
   return (
-    <div className="App">
-      <AllStudents />
-    </div>
+    <section className="main-container">
+      <div className="app">
+        <AllStudents />
+      </div>
+    </section>
   );
 }
 

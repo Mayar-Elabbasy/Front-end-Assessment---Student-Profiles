@@ -1,16 +1,29 @@
-.App {
-  overflow: hidden;
+.main-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
   background-color: gainsboro;
   height: auto;
   padding: 12px;
 }
 
+.app {
+  overflow: hidden;
+  cursor: default;
+}
+
 .main-card {
   position: relative;
-  width: 580px !important;
   height: 530px;
-  overflow: auto;
+  overflow: scroll;
   background:#fff;
+  border-radius: 15px !important;
+  cursor: url("https://api.iconify.design/mdi:cursor-default.svg"), auto;
+}
+
+.main-card:focus {
+  box-shadow:none;
+  outline: none;
 }
 
 .student-avatar {
@@ -38,18 +51,21 @@
 }
 
 ::-webkit-scrollbar {
-  width: 7px;
+  width: 6px;
+  color: transparent;
 }
 
 ::-webkit-scrollbar-track {
-  background: #f1f1f1; 
+  background: transparent;
+  border-radius: 35px !important;
 }
 
-::-webkit-scrollbar-thumb {
-  background: #888; 
-  border-radius: 10px;
+::-webkit-scrollbar-track:hover {
+  background: white !important; 
+  border-radius: 35px !important;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: #555; 
+  background: rgb(189, 181, 181);
+  border-radius: 15px !important;
 }
