@@ -85,3 +85,20 @@ input[type="search"]:focus {
   background: rgb(189, 181, 181);
   border-radius: 15px !important;
 }
+
+.test-scores-toggle-button {
+  background-color: transparent;
+  border: none;
+  color: rgb(172, 170, 170);
+  cursor: grab;
+  padding: 10px;
+}
+
+.test-scores-toggle-button:focus {
+  box-shadow:none;
+  outline: none;
+}
+
+.grade {
+  display: block;
+}
