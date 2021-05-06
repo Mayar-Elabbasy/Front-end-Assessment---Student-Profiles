@@ -4,7 +4,6 @@ import axios from 'axios';
 import { FaPlus, FaMinus } from 'react-icons/fa';
 
 function AllStudents() {
-    let averageOfGrades = 0;
     const [state, setState] = useState({
         students: [],
         searchByStudentName: ''
@@ -92,17 +91,18 @@ function AllStudents() {
                                             {(student.grades.length > 0)?
                                                 <React.Fragment>
                                                 {/* average of grades for each student */}
-                                                <div className="mb-2">
-                                                    {averageOfGrades = 
-                                                        student.grades.reduce((sum, grade) =>
-                                                            sum + Number(grade), 0) / student.grades.length}
+                                                <span className="mb-2">
+                                                    {student.grades.reduce((sum, grade) =>
+                                                        sum + Number(grade), 0) / student.grades.length}
                                                     {`${"%"}`}
-                                                </div>
+                                                    <br />
+                                                    <br />
+                                                </span>
 
                                                 {/* expandable list view for each student */}
                                                     {student.grades.map((grade, index) => {         
                                                         return (
-                                                            <React.Fragment>
+                                                            <React.Fragment key={index}>
                                                                 {state.openedExpandableListView[student.id] ?
                                                                     <span className="grade">
                                                                         <span className="mr-3">
