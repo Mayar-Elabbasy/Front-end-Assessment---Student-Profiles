@@ -18,7 +18,8 @@ function AllStudents() {
                 students: response.data.students,  
                 toggleButton: true,
                 openedExpandableListView: false,
-                studentID: ''  
+                studentID: '',
+                tag: '',
             })  
 		}).catch(error => {
 			console.log(error);
@@ -45,6 +46,38 @@ function AllStudents() {
         })
     }
 
+    const handleFields = ({target}) => {
+        setState({
+            ...state,
+            [target.name]: target.value
+        })
+    }
+
+    const addNewTag = (event, studentID) => { 
+        if(event.key === 'Enter') {
+            let studentTags = [];
+            for(let i = 0; i < state.students.length; i++) {
+                if (state.students[i].studentTags) {
+                    // console.log("state.students[i].studentTags", state.students[i].studentTags);
+                } else {
+                    state.students[i].studentTags = studentTags;
+                }
+
+                if(state.students[i].id === studentID) {
+                    state.students[i].studentTags.push(state.tag)
+                    document.querySelector(".tag").value = '';
+
+                    setState({
+                        ...state,
+                        students: state.students,
+                        tag: ''      
+                    })
+                    break;
+                }
+            }    
+        }    
+    }
+
     let students = state.students.filter((student) => {
         let studentFullName = `${student.firstName} ${student.lastName}`;
         // console.log(studentFullName);
@@ -53,6 +86,7 @@ function AllStudents() {
         || studentFullName.toLowerCase().indexOf(state.searchByStudentName.toLowerCase()) >= 0;
     });
 
+    // console.log(state);
     return (
         <Card className="mt-5 mb-5 main-card container" tabIndex="0">
             <input type="search" placeholder="Search by name" 
@@ -123,8 +157,28 @@ function AllStudents() {
                                             }
                                             </span>
                                         </span>
+                                        {(student.studentTags && student.studentTags.length > 0)?
+                                                <React.Fragment>
+                                                    {student.studentTags.map((studentTag, index) => {         
+                                                        return (
+                                                            <React.Fragment key={index}>
+                                                                {studentTag}
+                                                            </React.Fragment>
+                                                        ) 
+                                                        })    
+                                                    }
+                                                </React.Fragment>:
+                                                <React.Fragment></React.Fragment>
+                                        }
                                     </CardText>
                                 </CardBody>
+                                <div className="col-md-4">
+                                    <input 
+                                        type="text" name="tag" placeholder="Add a tag"
+                                        className="tag" 
+                                        onChange={handleFields} 
+                                        onKeyDown={(event) => addNewTag(event,student.id)} />
+                            </div>
                             </div>
                             <div className="col-md-1">
                                 <button className="test-scores-toggle-button"
