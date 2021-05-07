@@ -12,6 +12,9 @@ function AllStudents() {
     useEffect(() => {
         document.querySelector(".main-card").focus();
         axios.get('https://api.hatchways.io/assessment/students').then(response => {
+            for(let i = 0; i < response.data.students.length; i++) {
+                response.data.students[i].studentTags = [];
+            }
 			// console.log(response.data);
             setState({
                 searchByStudentName: '',
@@ -55,24 +58,22 @@ function AllStudents() {
 
     const addNewTag = (event, studentID) => { 
         if(event.key === 'Enter') {
-            let studentTags = [];
             for(let i = 0; i < state.students.length; i++) {
-                if (state.students[i].studentTags) {
-                    // console.log("state.students[i].studentTags", state.students[i].studentTags);
-                } else {
-                    state.students[i].studentTags = studentTags;
-                }
-
-                if(state.students[i].id === studentID) {
+                // state.students[i].studentTags = [];
+                if (state.students[i].id === studentID) {
+                    state.students[i].studentTags = [...state.students[i].studentTags];
                     state.students[i].studentTags.push(state.tag)
-                    document.querySelector(".tag").value = '';
+                    document.querySelectorAll(".tag")[i].value = '';
 
                     setState({
                         ...state,
                         students: state.students,
                         tag: ''      
                     })
-                    break;
+      
+                } else if (state.students[i].id !== studentID) {
+                    state.students[i].studentTags = [...state.students[i].studentTags]
+                    continue;
                 }
             }    
         }    
