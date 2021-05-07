@@ -50,7 +50,7 @@
   font-size: 13px;
 }
 
-input[type="search"] {
+input[type="search"], input[type="text"] {
   font-family: 'Raleway', sans-serif;
   padding: 2px;
   margin-top: 4px;
@@ -58,11 +58,13 @@ input[type="search"] {
   margin-bottom: 5px;
   border: none;
   box-shadow: none;
+  background-color: transparent;
   border-bottom: 1px solid gainsboro !important;
 }
 
-input[type="search"]:focus {
+input[type="search"]:focus, input[type="text"]:focus {
   font-family: 'Raleway', sans-serif;
+  background-color: transparent;
   border-bottom: 1px solid black !important;
 }
 
@@ -101,4 +103,13 @@ input[type="search"]:focus {
 
 .grade {
   display: block;
+}
+
+.student-tag {
+  padding: 10px;
+  background-color: gainsboro;
+  color: black;
+  border-radius: 5px;
+  margin: 22px 2px;
+  font-family: 'Raleway', sans-serif;
 }

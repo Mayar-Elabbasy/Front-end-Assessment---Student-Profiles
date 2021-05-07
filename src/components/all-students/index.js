@@ -157,28 +157,32 @@ function AllStudents() {
                                             }
                                             </span>
                                         </span>
-                                        {(student.studentTags && student.studentTags.length > 0)?
-                                                <React.Fragment>
-                                                    {student.studentTags.map((studentTag, index) => {         
-                                                        return (
-                                                            <React.Fragment key={index}>
-                                                                {studentTag}
-                                                            </React.Fragment>
-                                                        ) 
-                                                        })    
-                                                    }
-                                                </React.Fragment>:
-                                                <React.Fragment></React.Fragment>
-                                        }
                                     </CardText>
+                                    {(student.studentTags && student.studentTags.length > 0)?
+                                        <React.Fragment>
+                                            {student.studentTags.map(
+                                                (studentTag, index) => {         
+                                                    return (
+                                                        <React.Fragment key={index}>
+                                                            <span className="student-tag">
+                                                                {studentTag}
+                                                            </span>
+                                                        </React.Fragment>
+                                                    ) 
+                                                })    
+                                            }
+                                        </React.Fragment>
+                                        :
+                                        <React.Fragment></React.Fragment>
+                                    }
                                 </CardBody>
-                                <div className="col-md-4">
+                                <div className="col-md-2 mt-3">
                                     <input 
                                         type="text" name="tag" placeholder="Add a tag"
                                         className="tag" 
                                         onChange={handleFields} 
                                         onKeyDown={(event) => addNewTag(event,student.id)} />
-                            </div>
+                                </div>
                             </div>
                             <div className="col-md-1">
                                 <button className="test-scores-toggle-button"
