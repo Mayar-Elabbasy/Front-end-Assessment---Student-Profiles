@@ -100,7 +100,6 @@ function AllStudents() {
         || studentFullName.toLowerCase().indexOf(state.searchByStudentName.toLowerCase()) >= 0;
     });
 
-    // console.log(state);
     return (
         <Card className="mt-5 mb-5 main-card container" tabIndex="0">
             <input type="search" placeholder="Search by name" 
@@ -143,8 +142,6 @@ function AllStudents() {
                                                 {student.grades.reduce((sum, grade) =>
                                                     sum + Number(grade), 0) / student.grades.length}
                                                 {`${"%"}`}
-                                                <br />
-                                                <br />
                                             </span>
 
                                             {/* expandable list view for each student */}
@@ -159,7 +156,7 @@ function AllStudents() {
                                                                     {`${grade}${"%"}`}
                                                                 </span>
                                                             : 
-                                                            <React.Fragment></React.Fragment>
+                                                            null
                                                             }
                                                         </React.Fragment>
                                                     ) 
@@ -167,7 +164,7 @@ function AllStudents() {
                                                 }
                                             </React.Fragment>
                                             :
-                                            <React.Fragment></React.Fragment>
+                                            null
                                         }
                                         </span>
                                     </span>
@@ -187,7 +184,7 @@ function AllStudents() {
                                         }
                                     </React.Fragment>
                                     :
-                                    <React.Fragment></React.Fragment>
+                                    null
                                 }
                             </CardBody>
                             <div className="col-md-2 mt-3">
