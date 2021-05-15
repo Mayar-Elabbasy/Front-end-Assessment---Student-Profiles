@@ -118,7 +118,7 @@ function AllStudents() {
                             />
                         </div>
                         <div className="col-md-8 m-1">
-                            <h3 className="mt-1 text-left font-weight-bold text-uppercase">
+                            <h3 className="text-left font-weight-bold text-uppercase">
                                 {`${student.firstName} ${student.lastName}`}
                             </h3>
                             <CardBody className="text-left main-font">
@@ -187,10 +187,10 @@ function AllStudents() {
                                     null
                                 }
                             </CardBody>
-                            <div className="col-md-2 mt-3">
+                            <div className="col-md-2">
                                 <input 
                                     type="text" name="tag" placeholder="Add a tag"
-                                    className="tag"
+                                    className="tag mt-2"
                                     onChange={handleFields}
                                     onKeyDown={(event) => addNewTag(event,student.id)} />
                             </div>
