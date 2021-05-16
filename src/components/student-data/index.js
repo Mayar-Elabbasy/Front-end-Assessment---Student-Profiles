@@ -1,7 +1,11 @@
-import React from 'react';
+import { Fragment } from 'react';
 import { CardText } from 'reactstrap';
 
 function StudentData(props) {
+    const averageOfGradesPerStudent = 
+        `${props.grades.reduce((sum, grade) => 
+            sum + Number(grade), 0) / props.grades.length} ${"%"}`;
+
     return (                 
         <CardText>
             <span className="student-data">
@@ -17,18 +21,15 @@ function StudentData(props) {
                 Average: 
                 <span className="ml-1">
                 {(props.grades.length > 0)?
-                    <React.Fragment>
-                    {/* average of grades for each student */}
-                    <span className="mb-2">
-                        {props.grades.reduce((sum, grade) =>
-                            sum + Number(grade), 0) / props.grades.length}
-                        {`${"%"}`}
-                    </span>
+                    <Fragment>
+                        <span className="mb-2">
+                            {averageOfGradesPerStudent}   
+                        </span>
 
-                    {/* expandable list view for each student */}
+                        {/* expandable list view for each student */}
                         {props.grades.map((grade, index) => {
                             return (
-                                <React.Fragment key={index}>
+                                <Fragment key={index}>
                                     {props.openedExpandableListView[props.id] ?
                                         <span className="grade">
                                             <span className="mr-3">
@@ -39,11 +40,11 @@ function StudentData(props) {
                                     : 
                                     null
                                     }
-                                </React.Fragment>
+                                </Fragment>
                             ) 
                             })  
                         }
-                    </React.Fragment>
+                    </Fragment>
                     :
                     null
                 }
