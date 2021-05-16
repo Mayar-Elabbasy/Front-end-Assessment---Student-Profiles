@@ -1,7 +1,10 @@
 import React, { useState, useEffect } from 'react';
-import { Card, CardText, CardBody } from 'reactstrap';
-import axios from 'axios';
+import { Card, CardBody } from 'reactstrap';
 import { FaPlus, FaMinus } from 'react-icons/fa';
+import axios from 'axios';
+import StudentImage from '../student-image/index';
+import StudentData from '../student-data/index';
+import StudentTag from '../student-tag/index';
 
 function AllStudents() {
     const [state, setState] = useState({
@@ -14,7 +17,6 @@ function AllStudents() {
             for(let i = 0; i < response.data.students.length; i++) {
                 response.data.students[i].studentTags = [];
             }
-			// console.log(response.data);
             setState({
                 searchByStudentName: '',
                 students: response.data.students,  
@@ -107,107 +109,43 @@ function AllStudents() {
 
         {students.map(student => {
             return (
-                <div key={student.id}>
-                    <div className="row">
-                        <div className="col-md-2">
-                            <img
-                                src={student.pic} 
-                                alt={`${student.firstName} ${student.lastName}`}
-                                className="float-left img-fluid student-avatar m-2 ml-3 
-                                            mt-3 rounded-circle"
+                <React.Fragment key={student.id}>
+                <div className="row">
+                    <div className="col-md-2">
+                        <StudentImage {...student} />
+                    </div>
+                    <div className="col-md-8 m-1">
+                        <h3 className="text-left font-weight-bold text-uppercase">
+                            {`${student.firstName} ${student.lastName}`}
+                        </h3>
+                        <CardBody className="text-left main-font">
+                            <StudentData 
+                                {...student} 
+                                openedExpandableListView={state.openedExpandableListView} 
                             />
-                        </div>
-                        <div className="col-md-8 m-1">
-                            <h3 className="text-left font-weight-bold text-uppercase">
-                                {`${student.firstName} ${student.lastName}`}
-                            </h3>
-                            <CardBody className="text-left main-font">
-                                <CardText>
-                                    <span className="student-data">
-                                        Email: {student.email}
-                                    </span>
-                                    <span className="student-data">
-                                        Company: {student.company}
-                                    </span> 
-                                    <span className="student-data">
-                                        Skill: {student.skill}
-                                    </span>
-                                    <span className="student-data">
-                                        Average: 
-                                        <span className="ml-1">
-                                        {(student.grades.length > 0)?
-                                            <React.Fragment>
-                                            {/* average of grades for each student */}
-                                            <span className="mb-2">
-                                                {student.grades.reduce((sum, grade) =>
-                                                    sum + Number(grade), 0) / student.grades.length}
-                                                {`${"%"}`}
-                                            </span>
-
-                                            {/* expandable list view for each student */}
-                                                {student.grades.map((grade, index) => {
-                                                    return (
-                                                        <React.Fragment key={index}>
-                                                            {state.openedExpandableListView[student.id] ?
-                                                                <span className="grade">
-                                                                    <span className="mr-3">
-                                                                        {`Test ${index+1}:`}
-                                                                    </span>
-                                                                    {`${grade}${"%"}`}
-                                                                </span>
-                                                            : 
-                                                            null
-                                                            }
-                                                        </React.Fragment>
-                                                    ) 
-                                                    })  
-                                                }
-                                            </React.Fragment>
-                                            :
-                                            null
-                                        }
-                                        </span>
-                                    </span>
-                                </CardText>
-                                {(student.studentTags && student.studentTags.length > 0)?
-                                    <React.Fragment>
-                                        {student.studentTags.map(
-                                            (studentTag, index) => {
-                                                return (
-                                                    <React.Fragment key={index}>
-                                                        <span className="student-tag">
-                                                            {studentTag}
-                                                        </span>
-                                                    </React.Fragment>
-                                                ) 
-                                            })  
-                                        }
-                                    </React.Fragment>
-                                    :
-                                    null
-                                }
-                            </CardBody>
-                            <div className="col-md-2">
-                                <input 
-                                    type="text" name="tag" placeholder="Add a tag"
-                                    className="tag mt-2"
-                                    onChange={handleFields}
-                                    onKeyDown={(event) => addNewTag(event,student.id)} />
-                            </div>
-                        </div>
-                        <div className="col-md-1">
-                            <button className="test-scores-toggle-button"
-                                onClick={() => {toggleButton(student.id)}}>
-                                {state.openedExpandableListView[student.id] ?
-                                    <FaMinus size="1.50em" />
-                                    :
-                                    <FaPlus size="1.50em" />
-                                }   
-                            </button>
+                            <StudentTag {...student} />
+                        </CardBody>
+                        <div className="col-md-2">
+                            <input
+                                type="text" name="tag" placeholder="Add a tag"
+                                className="tag mt-2"
+                                onChange={handleFields}
+                                onKeyDown={(event) => addNewTag(event,student.id)} />
                         </div>
                     </div>
-                    <hr />
+                    <div className="col-md-1">
+                        <button className="test-scores-toggle-button"
+                                onClick={() => {toggleButton(student.id)}}>
+                            {state.openedExpandableListView[student.id] ?
+                                <FaMinus size="1.50em" />
+                                :
+                                <FaPlus size="1.50em" />
+                            }   
+                        </button>
+                    </div>
                 </div>
+                <hr />
+                </React.Fragment>
             );
         })
         }  
